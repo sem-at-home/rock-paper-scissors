@@ -2,11 +2,26 @@ let humanScore = 0
 let computerScore = 0
 const possibleChoices = ['rock', 'paper', 'scissors']
 
-const computerChoice = getComputerChoice()
+playGame()
 
-const humanChoice = getHumanChoice()
+function playGame() {
+    const numberOfRounds = 5
+    for ( round = 1; round <= numberOfRounds; round++) {
+        const computerChoice = getComputerChoice()
+        const humanChoice = getHumanChoice()
+        playRound(humanChoice, computerChoice)
+    }
+    showFinalResult()
+}
 
-playRound(humanChoice, computerChoice)
+function getComputerChoice() {
+    const randomChoice = Math.floor(Math.random() * possibleChoices.length)
+    return possibleChoices[randomChoice]
+}
+
+function getHumanChoice() {
+    return prompt('Type your choice: Rock, Paper, or Scissors')
+}
 
 function playRound(humanChoice, computerChoice) {
     const safeHumanChoice = humanChoice.toLowerCase()
@@ -28,12 +43,13 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-function getComputerChoice() {
-
-    const randomChoice = Math.floor(Math.random() * possibleChoices.length)
-    return possibleChoices[randomChoice]
+function showFinalResult() {
+    if (humanScore > computerScore) {
+        console.log(`You win with the final result: ${humanScore}-${computerScore}`)
+    } else if (humanScore < computerScore) {
+        console.log(`You lose with the final result: ${humanScore}-${computerScore}`)
+    } else {
+        console.log(`It is a tie with the final result: ${humanScore}-${computerScore}`)
+    }
 }
 
-function getHumanChoice() {
-    return prompt('Type your choice: Rock, Paper, or Scissors')
-}
