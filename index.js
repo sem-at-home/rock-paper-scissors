@@ -1,4 +1,5 @@
-console.log('Hello World')
+const humanScore = 0
+const computerScore = 0
 
 console.log(getComputerChoice())
 
