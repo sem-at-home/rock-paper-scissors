@@ -12,5 +12,5 @@ function getComputerChoice() {
 }
 
 function getHumanChoice() {
-    console.log(prompt('Rock, Paper or Scissors?'))
+    console.log(prompt('Type your choice: Rock, Paper, or Scissors'))
 }
