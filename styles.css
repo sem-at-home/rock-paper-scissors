@@ -1,0 +1,19 @@
+p {
+    text-align: center;
+}
+
+#choices, #result, #final-result {
+    align-items: center;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding: 10px;
+}
+
+#score-board {
+    align-items: center;
+    display: flex;
+    gap: 100px;
+    justify-content: center;
+    padding: 50px;
+}

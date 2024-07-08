@@ -1,20 +1,17 @@
 let humanScore = 0
 let computerScore = 0
-const possibleChoices = ['rock', 'paper', 'scissors']
 
-playGame()
+const mainDiv = document.querySelector('#choices')
 
-function playGame() {
-    const numberOfRounds = 5
-    for ( round = 1; round <= numberOfRounds; round++) {
-        const computerChoice = getComputerChoice()
-        const humanChoice = getHumanChoice()
-        playRound(humanChoice, computerChoice)
-    }
-    showFinalResult()
-}
+mainDiv.addEventListener('click', function(event) { 
+    const humanChoice = event.target.id
+    const computerChoice = getComputerChoice()
+    playRound(humanChoice, computerChoice)
+    if (humanScore === 5 || computerScore === 5) showFinalResult()
+})
 
 function getComputerChoice() {
+    const possibleChoices = ['rock', 'paper', 'scissors']
     const randomChoice = Math.floor(Math.random() * possibleChoices.length)
     return possibleChoices[randomChoice]
 }
@@ -24,32 +21,46 @@ function getHumanChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-    const safeHumanChoice = humanChoice.toLowerCase()
-    if (!possibleChoices.includes(safeHumanChoice)) {
-        throw Error(`That is not a valid choice!`)
-    }
-    if (safeHumanChoice === computerChoice) {
-        console.log(`It is a tie: ${humanChoice} equals ${computerChoice}`)
+    if (humanChoice === computerChoice) {
+        setResultDivText(`It is a tie: ${humanChoice} equals ${computerChoice}`)
     } else if (
-        (safeHumanChoice === 'rock' && computerChoice === 'scissors') ||
-        (safeHumanChoice === 'scissors' && computerChoice === 'paper') ||
-        (safeHumanChoice === 'paper' && computerChoice === 'rock')
+        (humanChoice === 'rock' && computerChoice === 'scissors') ||
+        (humanChoice === 'scissors' && computerChoice === 'paper') ||
+        (humanChoice === 'paper' && computerChoice === 'rock')
     ) {
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`)
-        humanScore += 1
+        setResultDivText(`You win! ${humanChoice} beats ${computerChoice}`)
+        handleHumanWin()
     } else {
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}`)
-        computerScore += 1
+        setResultDivText(`You lose! ${computerChoice} beats ${humanChoice}`)
+        handleComputerWin()
     }
 }
 
 function showFinalResult() {
+    // mainDiv
     if (humanScore > computerScore) {
-        console.log(`You win with the final result: ${humanScore}-${computerScore}`)
-    } else if (humanScore < computerScore) {
-        console.log(`You lose with the final result: ${humanScore}-${computerScore}`)
+        handleFinalResult(`You win with the final result: ${humanScore}-${computerScore}`)
     } else {
-        console.log(`It is a tie with the final result: ${humanScore}-${computerScore}`)
+        handleFinalResult(`You lose with the final result: ${humanScore}-${computerScore}`)
     }
 }
 
+function handleFinalResult(text) {
+    const finalResultDiv = document.querySelector('#final-result')
+    finalResultDiv.textContent = text
+}
+
+function handleComputerWin() {
+    computerScore += 1
+    document.querySelector('#computer-score').textContent = computerScore
+}
+
+function handleHumanWin() {
+    humanScore += 1
+    document.querySelector('#human-score').textContent = humanScore
+}
+
+function setResultDivText(text) {
+    const resultDiv = document.querySelector('#result')
+    resultDiv.textContent = text
+}
